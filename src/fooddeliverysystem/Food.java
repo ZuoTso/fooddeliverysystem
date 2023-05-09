@@ -7,7 +7,10 @@ public class Food {
 	private double price;
 	
 	public Food(int id, String name, String description, double price) {
-		
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
 	}
 	
 	public String getName() {
@@ -27,4 +30,8 @@ public class Food {
 	public int getid() {
 		return id;
 	}
+	
+	/*public void getid(int id) {
+		this.id = id;
+	}*/
 }
