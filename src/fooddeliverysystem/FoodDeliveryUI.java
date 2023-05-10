@@ -7,6 +7,8 @@ public class FoodDeliveryUI {
 	private FoodDelivery foodDelivery;
 	private Scanner keyboard;
 	public List<Restaurant> restaurants;
+	public int numberOfFood;
+	public int currentRestaurant;
 
 	public FoodDeliveryUI(FoodDelivery foodDelivery) {
 		this.foodDelivery = foodDelivery;
@@ -20,6 +22,8 @@ public class FoodDeliveryUI {
 		this.foodDelivery.addRestaurant(restaurant2);
 		this.foodDelivery.addRestaurant(restaurant3);
 		restaurants = foodDelivery.getRestaurants();
+		numberOfFood = 1 ;
+		
 	}
 	
 
@@ -36,24 +40,23 @@ public class FoodDeliveryUI {
 		if (number == -1) System.exit(0);
 		else if (number<=0||number>restaurants.size()) {
 			while(number<=0||number>restaurants.size()) {
-				System.out.printf("Please select a restaurant on the screen: ");
+				System.out.printf("請選擇畫面上的餐廳: ");
 				number = keyboard.nextInt();
 			}
 		}
-
-
+		
 		foodDelivery.currentRestaurant(number);
 
-		System.out.println("("+restaurants.get(number-1).getName() + ") 1. add food");
-		System.out.println("("+restaurants.get(number-1).getName() + ") 2. check all food");
-		System.out.println("("+restaurants.get(number-1).getName() + ") 3. back to restaurant selection");
+		System.out.println("("+restaurants.get(number-1).getName() + ")1. 新增食物");
+		System.out.println("("+restaurants.get(number-1).getName() + ")2. 查看所有食物");
+		System.out.println("("+restaurants.get(number-1).getName() + ")3. 返回餐廳選擇");
 		selectMode();
 
 	}
 
 	private void selectMode() {
 
-		System.out.printf("Please enter selection: ");
+		System.out.printf("請輸入選擇: ");
 		int options = keyboard.nextInt();
 
 		switch (options) {
@@ -79,11 +82,13 @@ public class FoodDeliveryUI {
 	
 	private void reselectMode() {
 
-		System.out.printf("Please enter the correct option: ");
+		System.out.printf("請輸入正確選項: ");
 		int options = keyboard.nextInt();
 
 		switch (options) {
 		case 1:
+			foodDelivery.numberOfFood(numberOfFood);
+			numberOfFood++;
 			inputFoodData();
 			selectMode();
 			break;
@@ -104,15 +109,20 @@ public class FoodDeliveryUI {
 	}
 
 	private void inputFoodData() {
-		System.out.printf("Please enter food name: ");
-		String foodName = keyboard.next();
-		System.out.printf("Please enter food description: ");
-		String foodDescription = keyboard.next();
-		System.out.printf("Please enter food price: ");
-		double foodPrice = keyboard.nextDouble();
+		
+		System.out.printf("請輸入食物名稱: ");
+		String token = keyboard.nextLine();
+	    String foodName = keyboard.nextLine();
+	    System.out.printf("請輸入食物描述: ");
+	    //String token1 = keyboard.nextLine();
+	    String foodDescription = keyboard.nextLine();
+	    System.out.printf("請輸入食物價格: ");
+	    //String token2 = keyboard.next();
+	    double foodPrice = keyboard.nextDouble();
 		if(foodPrice<=0)
 			while(foodPrice<=0) {
-				System.out.printf("Price must be greater than zero, please re-enter: ");
+				System.out.println("價錢必須大於零，請重新輸入。");
+				System.out.printf("請輸入食物價格: ");
 				foodPrice = keyboard.nextDouble();
 			}
 		foodDelivery.creatFood(foodName, foodDescription, foodPrice);
@@ -123,16 +133,16 @@ public class FoodDeliveryUI {
 	}
 
 	private void checkAllFood() {
-		System.out.printf("%-8s %-16s %-8s %-8s\n","No.","Name","Price","Sescription");
-		List<Restaurant> restaurants = foodDelivery.getRestaurants();
-	    for (int i = 0; i < restaurants.size(); i++) {
-	        Restaurant restaurant = restaurants.get(i);
-	        List<Food> foodList = restaurant.getFood();
-	        for (int j = 0; j < foodList.size(); j++) {
-	            Food food = foodList.get(j);
-	            System.out.printf("%-8d %-16s %-8.2f %-8s\n", j+1, food.getName(), food.getPrice(), food.getDescription());
-	        }
+		System.out.printf("%-8s %-16s %-8s %-8s\n","No.","Name","Price","Description");
+	    Restaurant selectedRestaurant = restaurants.get(foodDelivery.restaurantIndex - 1);
+	    List<Food> foodList = selectedRestaurant.getFood();
+	    
+	    for (int i = 0; i < foodList.size(); i++) {
+	        Food food = foodList.get(i);
+	        System.out.printf("%-8d %-16s %-8.2f %-8s\n", food.getid(), food.getName(), food.getPrice(), food.getDescription());
 	    }
 	}
+
+
 
 }

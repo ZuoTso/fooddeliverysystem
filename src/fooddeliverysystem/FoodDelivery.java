@@ -5,9 +5,10 @@ import java.util.List;
 
 
 public class FoodDelivery {
-	private int restaurantIndex;
+	public int restaurantIndex;
 	private List<Restaurant> restaurants;
 	private List<Food> foodList;
+	public int numberOfFood;
 
 	public  FoodDelivery() {
 		restaurants = new ArrayList<>();
@@ -38,4 +39,9 @@ public class FoodDelivery {
 		this.restaurantIndex = restaurantIndex;
 	}
 
+	public void numberOfFood(int numberOfFood) {
+		this.numberOfFood = numberOfFood;
+	}
+	
+	
 }

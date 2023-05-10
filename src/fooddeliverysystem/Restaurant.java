@@ -10,6 +10,7 @@ public class Restaurant {
 	public Restaurant(String name) {
 		this.name = name;
 		this.foods = new ArrayList<>();
+		
 	}
 	
 	public void addFood(String name, String description, double price) {
